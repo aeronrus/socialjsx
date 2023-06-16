@@ -1,0 +1,65 @@
+@import '../../style.scss';
+
+.post {
+  background-color: var(--bgPost);
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 10px 15px;
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    .user {
+      .userInfo {
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        .details {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          .name {
+            font-weight: 500;
+            font-size: 18px;
+          }
+          .date {
+            font-size: 12px;
+          }
+          .links {
+            text-decoration: none;
+            color: var(--textColor);
+          }
+        }
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      img {
+        width: 80%;
+        height: 20%;
+        border-radius: 10px;
+      }
+    }
+    .info {
+      display: flex;
+      gap: 25px;
+      .item {
+        display: flex;
+        gap: 5px;
+        font-size: 14px;
+        align-items: center;
+        cursor: pointer;
+
+        &active {
+          color: red;
+        }
+      }
+    }
+  }
+}

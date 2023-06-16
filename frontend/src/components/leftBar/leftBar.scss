@@ -1,0 +1,49 @@
+@import '../../style.scss';
+
+.leftBar {
+  flex: 2;
+  padding: 15px 20px;
+  display: flex;
+  border-right: solid 1px rgb(0, 26, 255);
+  justify-content: center;
+  background-color: var(--bgLeft);
+  color: var(--textColor);
+  position: sticky;
+  overflow: hidden;
+
+  @include mobile {
+    display: none;
+  }
+  .container {
+    position: fixed;
+    .menu {
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .user {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+        padding: 20px 0px;
+        span {
+          color: var(--textColor);
+        }
+        img {
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+        }
+      }
+      .link {
+        text-decoration: none;
+      }
+      .item {
+        color: var(--textColor);
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+@import '../../style.scss';
+
+.rightBar {
+  z-index: 998;
+  position: sticky;
+  color: var(--textColor);
+  flex: 3;
+  background-color: var(--bg);
+  @include mobile {
+    display: none;
+  }
+  @include tablet {
+    display: none;
+  }
+
+  .container {
+    right: 10px;
+    position: fixed;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border: solid 1px var(--border);
+    justify-content: center;
+    align-items: center;
+    -webkit-box-shadow: 12px 13px 8px -3px rgba(34, 60, 80, 0.39);
+    -moz-box-shadow: 12px 13px 8px -3px rgba(34, 60, 80, 0.39);
+    box-shadow: 12px 13px 8px -3px rgba(34, 60, 80, 0.39);
+
+    .items {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .block {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .user_data {
+          display: flex;
+          gap: 5px;
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+          }
+        }
+        .buttons {
+          display: flex;
+          gap: 5px;
+        }
+      }
+    }
+  }
+}
