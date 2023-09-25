@@ -13,6 +13,8 @@ const App = () => {
   const { currentUser } = useContext(AuthContext);
   const queryClient = new QueryClient();
 
+  console.log(currentUser);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

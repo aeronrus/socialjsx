@@ -26,7 +26,6 @@ const AddPost = () => {
     try {
       const formData = new FormData();
       formData.append('image', file);
-      console.log(formData);
       const res = await addRequest.post('/upload', formData);
       return res.data;
     } catch (error) {

@@ -5,11 +5,14 @@ import Post from '../post/Post';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 import { addRequest } from '../../axios';
 
-const Posts = () => {
-  const { isLoading, isError, data } = useQuery(['posts'], () =>
-    addRequest.get('/posts').then((res) => {
-      return res.data;
-    }),
+const Posts = ({ userId }) => {
+  const { isLoading, isError, data } = useQuery(
+    ['posts'],
+    () =>
+      addRequest.get('/posts?userId=' + userId).then((res) => {
+        return res.data;
+      }),
+    { refetchOnWindowFocus: false, keepPreviousDat: true },
   );
 
   return (
@@ -19,7 +22,7 @@ const Posts = () => {
       ) : isLoading ? (
         <h1>Loading...</h1>
       ) : (
-        data.map((item) => <Post post={item} />)
+        data.map((item) => <Post key={item.desc} post={item} />)
       )}
     </div>
   );

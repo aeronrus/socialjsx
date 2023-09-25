@@ -16,12 +16,6 @@ const Comments = ({ postId }) => {
     });
   };
 
-  const createComment = async () => {
-    const { res } = await addRequest.post('/comments', newComment).then((res) => {
-      return res.data;
-    });
-  };
-
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery(['comments'], fetchComments);
@@ -59,7 +53,7 @@ const Comments = ({ postId }) => {
         ) : isError ? (
           <h3>Errors</h3>
         ) : (
-          data.map((comment) => <Comment comment={comment} />)
+          data.map((comment) => <Comment key={comment.desc} comment={comment} />)
         )}
       </div>
     </div>

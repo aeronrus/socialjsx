@@ -1,9 +1,10 @@
 import AddPost from '../../components/addPost/Addpost';
 import Posts from '../../components/posts/Posts';
+import { AuthContext } from '../../context/authContext';
 import './home.scss';
 import React from 'react';
 
-const Home: React.FC = () => {
+const Home = () => {
   return (
     <div className="home">
       <AddPost />

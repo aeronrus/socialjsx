@@ -1,16 +1,14 @@
 import axios from 'axios';
-import { createContext } from 'react';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { addRequest } from '../axios';
+
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
 
-  const login = async (loginInput) => {
-    const res = await addRequest.post('/auth/login', loginInput, {
-      withCredentials: true,
-    });
+  const login = async (inputs) => {
+    const res = await addRequest.post('/auth/login', inputs, {});
 
     setCurrentUser(res.data);
   };

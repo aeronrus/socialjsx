@@ -3,37 +3,28 @@ import './register.scss';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { IRegisterPayload, registerUser } from '../../api/auth/authClient';
 
-type RegisterDataType = {
-  username: string;
-  email: string;
-  password: string;
-  name: string;
-};
 const Register: React.FC = () => {
-  const [registerData, setRegisterData] = useState<RegisterDataType>({
+  //создадим объект с нашими данными в полях регистрации
+  const [registerData, setRegisterData] = useState<IRegisterPayload>({
     username: '',
     email: '',
     password: '',
     name: '',
   });
-
   const navigate = useNavigate();
 
+  //присваиваем каждому полю свое значение(е.target.value)
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    try {
-      const data = await axios.post('http://localhost:9999/backend/auth/register', registerData);
-      //navigate('/login');
-    } catch (error) {
-      console.log(error);
-      alert('Не удалось зарегистрироваться, попробуйте снова');
-    }
+  const handleRegister = () => {
+    registerUser(registerData);
+    navigate('/login');
   };
+
   return (
     <div className="register">
       <div className="card">
@@ -52,7 +43,7 @@ const Register: React.FC = () => {
             <input type="email" placeholder="Email" name="email" onChange={handleChange} />
             <input type="text" placeholder="Username" name="username" onChange={handleChange} />
             <input type="password" placeholder="Paswword" name="password" onChange={handleChange} />
-            <button onClick={handleSubmit}>Register</button>
+            <button onClick={handleRegister}>Register</button>
           </form>
         </div>
       </div>

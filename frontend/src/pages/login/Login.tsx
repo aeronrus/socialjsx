@@ -3,28 +3,34 @@ import './login.scss';
 import { useContext, useState, ChangeEvent, FormEvent } from 'react';
 import { AuthContext } from '../../context/authContext';
 
-type LoginInputType = {
+//создаем тип для ввода данных пользователем
+
+export interface ILoginPayload {
   username: string;
   password: string;
-};
+}
 
 const Login: React.FC = () => {
+  //возвращаем объект login из контекста
   const { login } = useContext(AuthContext);
 
-  const [loginInput, setLoginInput] = useState<LoginInputType>({
+  // создаем useState для ввода и хранения данных пользователем при логине
+  const [loginInput, setLoginInput] = useState<ILoginPayload>({
     username: '',
     password: '',
   });
 
   const navigate = useNavigate();
+
+  // в случе изменения(ввода данных) присваиваем каждому полю свое значение(е.target.value)
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLoginInput({ ...loginInput, [e.target.name]: e.target.value });
   };
 
   const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); //отмена действий внутри браузера при отправке формы по дефолту
     try {
-      await login(loginInput);
+      await login(loginInput); //отправка в authcontext в функцию(в файле контекста-это пост запрос на сервер по адреу 'login' c полезными данными и заголовками для кук + запись в LS)
       navigate('/');
     } catch (error) {
       console.log(error);

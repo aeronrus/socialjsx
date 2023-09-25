@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteOutlined';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ShareIcon from '@mui/icons-material/Share';
 import { AuthContext } from '../../context/authContext';
 import Comments from '../comments/Comments';
@@ -14,11 +15,15 @@ import { addRequest } from '../../axios';
 const Post = ({ post }) => {
   const { currentUser } = useContext(AuthContext);
   const [commentOpen, setCommentOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
 
-  const { isLoading, isError, data } = useQuery(['likes', post.id], () =>
-    addRequest.get('/likes?postId=' + post.id).then((res) => {
-      return res.data;
-    }),
+  const { isLoading, isError, data } = useQuery(
+    ['likes', post.id],
+    () =>
+      addRequest.get('/likes?postId=' + post.id).then((res) => {
+        return res.data;
+      }),
+    { refetchOnWindowFocus: false },
   );
 
   const queryClient = useQueryClient();
@@ -35,8 +40,23 @@ const Post = ({ post }) => {
     },
   );
 
+  const deleteMutation = useMutation(
+    (postId) => {
+      return addRequest.delete('/posts/' + postId);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['posts']);
+      },
+    },
+  );
+
   const handleLike = () => {
     mutation.mutate(data?.includes(currentUser.id));
+  };
+
+  const handleDelete = () => {
+    deleteMutation.mutate(post.id);
   };
 
   return (
@@ -49,9 +69,10 @@ const Post = ({ post }) => {
               <Link to={`/profile/${post.userId}`} className="links">
                 <span className="name">{post.name}</span>
               </Link>
-              <span className="date">{post.createdAt}</span>
+              <span className="date">{post.createdAt?.fromNow()}</span>
             </div>
           </div>
+          <DeleteOutlineIcon onClick={handleDelete} />
         </div>
         <div className="content">
           <p>{post.desc}</p>
